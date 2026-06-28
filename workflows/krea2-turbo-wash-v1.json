@@ -1,7 +1,7 @@
 {
   "id": "krea2-turbo-wash-v1-example",
   "revision": 3,
-  "last_node_id": 175,
+  "last_node_id": 176,
   "last_link_id": 265,
   "nodes": [
     {
@@ -16,15 +16,14 @@
         58
       ],
       "flags": {},
-      "order": 18,
+      "order": 19,
       "mode": 0,
       "inputs": [
         {
           "label": "input",
           "name": "MODEL",
           "type": "MODEL",
-          "link": 133,
-          "localized_name": "input"
+          "link": 133
         }
       ],
       "outputs": [
@@ -32,8 +31,7 @@
           "label": "output",
           "name": "MODEL",
           "type": "MODEL",
-          "links": null,
-          "localized_name": "output"
+          "links": null
         }
       ],
       "title": "Set_Model",
@@ -142,15 +140,14 @@
         58
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
           "label": "input",
           "name": "CLIP",
           "type": "CLIP",
-          "link": 134,
-          "localized_name": "input"
+          "link": 134
         }
       ],
       "outputs": [
@@ -158,8 +155,7 @@
           "label": "output",
           "name": "CLIP",
           "type": "CLIP",
-          "links": null,
-          "localized_name": "output"
+          "links": null
         }
       ],
       "title": "Set_CLIP",
@@ -249,15 +245,14 @@
         58
       ],
       "flags": {},
-      "order": 14,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
           "label": "input",
           "name": "VAE",
           "type": "VAE",
-          "link": 135,
-          "localized_name": "input"
+          "link": 135
         }
       ],
       "outputs": [
@@ -265,8 +260,7 @@
           "label": "output",
           "name": "VAE",
           "type": "VAE",
-          "links": null,
-          "localized_name": "output"
+          "links": null
         }
       ],
       "title": "Set_VAE",
@@ -325,8 +319,7 @@
           "type": "MODEL",
           "links": [
             125
-          ],
-          "localized_name": "model"
+          ]
         }
       ],
       "properties": {
@@ -366,7 +359,7 @@
         46
       ],
       "flags": {},
-      "order": 23,
+      "order": 24,
       "mode": 0,
       "inputs": [
         {
@@ -424,8 +417,7 @@
           "type": "MODEL",
           "links": [
             252
-          ],
-          "localized_name": "output"
+          ]
         }
       ],
       "title": "Get_Model",
@@ -470,8 +462,7 @@
             136,
             194,
             202
-          ],
-          "localized_name": "output"
+          ]
         }
       ],
       "title": "Get_VAE",
@@ -502,22 +493,20 @@
         57.07597136206232
       ],
       "flags": {},
-      "order": 26,
+      "order": 27,
       "mode": 0,
       "inputs": [
         {
           "label": "pixels",
           "name": "pixels",
           "type": "IMAGE",
-          "link": 263,
-          "localized_name": "pixels"
+          "link": 263
         },
         {
           "label": "vae",
           "name": "vae",
           "type": "VAE",
-          "link": 202,
-          "localized_name": "vae"
+          "link": 202
         }
       ],
       "outputs": [
@@ -527,8 +516,7 @@
           "type": "LATENT",
           "links": [
             255
-          ],
-          "localized_name": "latent"
+          ]
         }
       ],
       "title": "Encode reference as initial latent",
@@ -568,8 +556,7 @@
           "type": "IMAGE",
           "links": [
             201
-          ],
-          "localized_name": "output"
+          ]
         }
       ],
       "title": "Get_Reference_Image",
@@ -602,15 +589,14 @@
       "flags": {
         "collapsed": true
       },
-      "order": 17,
+      "order": 18,
       "mode": 0,
       "inputs": [
         {
           "label": "input",
           "name": "IMAGE",
           "type": "IMAGE",
-          "link": 178,
-          "localized_name": "input"
+          "link": 178
         }
       ],
       "outputs": [
@@ -618,8 +604,7 @@
           "label": "output",
           "name": "IMAGE",
           "type": "IMAGE",
-          "links": null,
-          "localized_name": "output"
+          "links": null
         }
       ],
       "title": "Set_Reference_Image",
@@ -653,22 +638,20 @@
       "flags": {
         "collapsed": false
       },
-      "order": 29,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
           "label": "samples",
           "name": "samples",
           "type": "LATENT",
-          "link": 256,
-          "localized_name": "samples"
+          "link": 256
         },
         {
           "label": "vae",
           "name": "vae",
           "type": "VAE",
-          "link": 136,
-          "localized_name": "vae"
+          "link": 136
         }
       ],
       "outputs": [
@@ -679,8 +662,7 @@
           "slot_index": 0,
           "links": [
             97
-          ],
-          "localized_name": "image"
+          ]
         }
       ],
       "properties": {
@@ -719,8 +701,7 @@
           "type": "CLIP",
           "links": [
             193
-          ],
-          "localized_name": "output"
+          ]
         }
       ],
       "title": "Get_CLIP",
@@ -751,15 +732,14 @@
         170.6824477270486
       ],
       "flags": {},
-      "order": 16,
+      "order": 17,
       "mode": 0,
       "inputs": [
         {
           "label": "reference_image",
           "name": "参考图",
           "type": "IMAGE",
-          "link": 201,
-          "localized_name": "reference_image"
+          "link": 201
         },
         {
           "label": "upscale_method",
@@ -768,8 +748,7 @@
           "widget": {
             "name": "缩放算法"
           },
-          "link": null,
-          "localized_name": "upscale_method"
+          "link": null
         },
         {
           "label": "align_multiple",
@@ -778,8 +757,7 @@
           "widget": {
             "name": "尺寸对齐倍数"
           },
-          "link": null,
-          "localized_name": "align_multiple"
+          "link": null
         },
         {
           "label": "align_mode",
@@ -788,8 +766,7 @@
           "widget": {
             "name": "对齐方式"
           },
-          "link": null,
-          "localized_name": "align_mode"
+          "link": null
         },
         {
           "label": "max_megapixels",
@@ -798,8 +775,7 @@
           "widget": {
             "name": "最大百万像素"
           },
-          "link": null,
-          "localized_name": "max_megapixels"
+          "link": null
         }
       ],
       "outputs": [
@@ -810,22 +786,19 @@
           "links": [
             188,
             264
-          ],
-          "localized_name": "output_image"
+          ]
         },
         {
           "label": "width",
           "name": "宽度",
           "type": "INT",
-          "links": null,
-          "localized_name": "width"
+          "links": null
         },
         {
           "label": "height",
           "name": "高度",
           "type": "INT",
-          "links": null,
-          "localized_name": "height"
+          "links": null
         }
       ],
       "title": "Reference size / aspect alignment",
@@ -866,15 +839,14 @@
         278
       ],
       "flags": {},
-      "order": 25,
-      "mode": 0,
+      "order": 26,
+      "mode": 4,
       "inputs": [
         {
           "label": "images",
           "name": "images",
           "type": "IMAGE",
-          "link": 258,
-          "localized_name": "images"
+          "link": 258
         }
       ],
       "outputs": [
@@ -916,29 +888,26 @@
         374
       ],
       "flags": {},
-      "order": 21,
+      "order": 22,
       "mode": 0,
       "inputs": [
         {
           "label": "clip",
           "name": "clip",
           "type": "CLIP",
-          "link": 193,
-          "localized_name": "clip"
+          "link": 193
         },
         {
           "label": "vae",
           "name": "vae",
           "type": "VAE",
-          "link": 194,
-          "localized_name": "vae"
+          "link": 194
         },
         {
           "label": "reference_image",
           "name": "参考图",
           "type": "IMAGE",
-          "link": 195,
-          "localized_name": "reference_image"
+          "link": 195
         },
         {
           "label": "prompt",
@@ -947,8 +916,7 @@
           "widget": {
             "name": "提示词"
           },
-          "link": 257,
-          "localized_name": "prompt"
+          "link": 257
         },
         {
           "label": "reference_strength",
@@ -957,8 +925,7 @@
           "widget": {
             "name": "参考强度"
           },
-          "link": null,
-          "localized_name": "reference_strength"
+          "link": null
         },
         {
           "label": "text_end_percent",
@@ -967,8 +934,7 @@
           "widget": {
             "name": "文字结束进度"
           },
-          "link": null,
-          "localized_name": "text_end_percent"
+          "link": null
         },
         {
           "label": "image_start_percent",
@@ -977,8 +943,7 @@
           "widget": {
             "name": "图像开始进度"
           },
-          "link": null,
-          "localized_name": "image_start_percent"
+          "link": null
         },
         {
           "label": "rebalance_multiplier",
@@ -987,8 +952,7 @@
           "widget": {
             "name": "重平衡倍率"
           },
-          "link": null,
-          "localized_name": "rebalance_multiplier"
+          "link": null
         },
         {
           "label": "guidance_strength",
@@ -997,8 +961,7 @@
           "widget": {
             "name": "差异引导强度"
           },
-          "link": null,
-          "localized_name": "guidance_strength"
+          "link": null
         },
         {
           "label": "main_layer_weights",
@@ -1007,8 +970,7 @@
           "widget": {
             "name": "主层权重"
           },
-          "link": null,
-          "localized_name": "main_layer_weights"
+          "link": null
         },
         {
           "label": "subject_prefix",
@@ -1017,8 +979,7 @@
           "widget": {
             "name": "主体前缀"
           },
-          "link": null,
-          "localized_name": "subject_prefix"
+          "link": null
         }
       ],
       "outputs": [
@@ -1029,8 +990,7 @@
           "links": [
             192,
             253
-          ],
-          "localized_name": "conditioning"
+          ]
         }
       ],
       "title": "Skin-safe rebalance",
@@ -1077,121 +1037,43 @@
         1818.088941196611
       ],
       "size": [
-        256.5049168506582,
+        295.495703125,
         318.45216792146675
       ],
       "flags": {
         "collapsed": false
       },
-      "order": 20,
+      "order": 21,
       "mode": 4,
       "inputs": [
         {
+          "name": "图像",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
           "label": "image",
-          "localized_name": "image",
           "name": "image",
           "type": "IMAGE",
           "link": 264
         },
         {
-          "label": "clean_strength",
-          "localized_name": "clean_strength",
-          "name": "clean_strength",
-          "type": "FLOAT",
-          "link": null,
-          "widget": {
-            "name": "clean_strength"
-          }
-        },
-        {
-          "label": "white_threshold",
-          "localized_name": "white_threshold",
-          "name": "white_threshold",
-          "type": "FLOAT",
-          "link": null,
-          "widget": {
-            "name": "white_threshold"
-          }
-        },
-        {
-          "label": "contrast_threshold",
-          "localized_name": "contrast_threshold",
-          "name": "contrast_threshold",
-          "type": "FLOAT",
-          "link": null,
-          "widget": {
-            "name": "contrast_threshold"
-          }
-        },
-        {
           "label": "saturation_limit",
-          "localized_name": "saturation_limit",
           "name": "saturation_limit",
           "type": "FLOAT",
-          "link": null,
           "widget": {
             "name": "saturation_limit"
-          }
-        },
-        {
-          "label": "stroke_radius",
-          "localized_name": "stroke_radius",
-          "name": "stroke_radius",
-          "type": "INT",
-          "link": null,
-          "widget": {
-            "name": "stroke_radius"
-          }
-        },
-        {
-          "label": "mask_expand",
-          "localized_name": "mask_expand",
-          "name": "mask_expand",
-          "type": "INT",
-          "link": null,
-          "widget": {
-            "name": "mask_expand"
-          }
-        },
-        {
-          "label": "patch_radius",
-          "localized_name": "patch_radius",
-          "name": "patch_radius",
-          "type": "INT",
-          "link": null,
-          "widget": {
-            "name": "patch_radius"
-          }
+          },
+          "link": null
         },
         {
           "label": "color_mode",
-          "localized_name": "color_mode",
           "name": "color_mode",
           "type": "COMBO",
-          "link": null,
           "widget": {
             "name": "color_mode"
-          }
-        },
-        {
-          "label": "custom_colors",
-          "localized_name": "custom_colors",
-          "name": "custom_colors",
-          "type": "STRING",
-          "link": null,
-          "widget": {
-            "name": "custom_colors"
-          }
-        },
-        {
-          "label": "color_tolerance",
-          "localized_name": "color_tolerance",
-          "name": "color_tolerance",
-          "type": "FLOAT",
-          "link": null,
-          "widget": {
-            "name": "color_tolerance"
-          }
+          },
+          "link": null
         }
       ],
       "outputs": [
@@ -1203,24 +1085,21 @@
           "links": [
             195,
             259
-          ],
-          "localized_name": "cleaned_image"
+          ]
         },
         {
           "label": "watermark_preview",
           "name": "彩色水印预览",
           "type": "IMAGE",
           "slot_index": 1,
-          "links": null,
-          "localized_name": "watermark_preview"
+          "links": null
         },
         {
           "label": "watermark_mask",
           "name": "彩色水印遮罩",
           "type": "MASK",
           "slot_index": 2,
-          "links": null,
-          "localized_name": "watermark_mask"
+          "links": null
         }
       ],
       "title": "Colored symbol / watermark pre-clean",
@@ -1266,19 +1145,18 @@
         1482.3536391960783
       ],
       "size": [
-        242.72766526636394,
+        269.0064453125,
         255.8187371497902
       ],
       "flags": {},
-      "order": 24,
-      "mode": 0,
+      "order": 25,
+      "mode": 4,
       "inputs": [
         {
           "label": "image",
           "name": "图像",
           "type": "IMAGE",
-          "link": 262,
-          "localized_name": "image"
+          "link": 262
         },
         {
           "label": "clean_strength",
@@ -1287,8 +1165,7 @@
           "widget": {
             "name": "清理强度"
           },
-          "link": null,
-          "localized_name": "clean_strength"
+          "link": null
         },
         {
           "label": "spot_threshold",
@@ -1297,8 +1174,7 @@
           "widget": {
             "name": "暗点阈值"
           },
-          "link": null,
-          "localized_name": "spot_threshold"
+          "link": null
         },
         {
           "label": "spot_expand",
@@ -1307,8 +1183,7 @@
           "widget": {
             "name": "暗点扩张"
           },
-          "link": null,
-          "localized_name": "spot_expand"
+          "link": null
         },
         {
           "label": "patch_radius",
@@ -1317,8 +1192,7 @@
           "widget": {
             "name": "修补半径"
           },
-          "link": null,
-          "localized_name": "patch_radius"
+          "link": null
         },
         {
           "label": "skin_mask_expand",
@@ -1327,8 +1201,7 @@
           "widget": {
             "name": "肤色遮罩扩张"
           },
-          "link": null,
-          "localized_name": "skin_mask_expand"
+          "link": null
         },
         {
           "label": "global_skin_smooth",
@@ -1337,8 +1210,7 @@
           "widget": {
             "name": "全局肤色平滑"
           },
-          "link": null,
-          "localized_name": "global_skin_smooth"
+          "link": null
         }
       ],
       "outputs": [
@@ -1349,8 +1221,7 @@
           "slot_index": 0,
           "links": [
             263
-          ],
-          "localized_name": "cleaned_image"
+          ]
         },
         {
           "label": "spot_preview",
@@ -1359,16 +1230,14 @@
           "slot_index": 1,
           "links": [
             261
-          ],
-          "localized_name": "spot_preview"
+          ]
         },
         {
           "label": "spot_mask",
           "name": "暗点遮罩",
           "type": "MASK",
           "slot_index": 2,
-          "links": null,
-          "localized_name": "spot_mask"
+          "links": null
         }
       ],
       "title": "Skin dark spot cleanup before VAE",
@@ -1410,15 +1279,14 @@
         281.0526381347672
       ],
       "flags": {},
-      "order": 27,
-      "mode": 0,
+      "order": 28,
+      "mode": 4,
       "inputs": [
         {
           "label": "images",
           "name": "images",
           "type": "IMAGE",
-          "link": 261,
-          "localized_name": "images"
+          "link": 261
         }
       ],
       "outputs": [
@@ -1460,15 +1328,14 @@
         255.8187371497902
       ],
       "flags": {},
-      "order": 22,
-      "mode": 0,
+      "order": 23,
+      "mode": 4,
       "inputs": [
         {
           "label": "image",
           "name": "图像",
           "type": "IMAGE",
-          "link": 259,
-          "localized_name": "image"
+          "link": 259
         },
         {
           "label": "skin_smooth",
@@ -1477,8 +1344,7 @@
           "widget": {
             "name": "肤质平滑"
           },
-          "link": null,
-          "localized_name": "skin_smooth"
+          "link": null
         },
         {
           "label": "skin_mask_expand",
@@ -1487,8 +1353,7 @@
           "widget": {
             "name": "肤色遮罩扩张"
           },
-          "link": null,
-          "localized_name": "skin_mask_expand"
+          "link": null
         },
         {
           "label": "detail_keep",
@@ -1497,8 +1362,7 @@
           "widget": {
             "name": "细节保留"
           },
-          "link": null,
-          "localized_name": "detail_keep"
+          "link": null
         },
         {
           "label": "blur_radius",
@@ -1507,8 +1371,7 @@
           "widget": {
             "name": "主模糊半径"
           },
-          "link": null,
-          "localized_name": "blur_radius"
+          "link": null
         },
         {
           "label": "lowpass_radius",
@@ -1517,8 +1380,7 @@
           "widget": {
             "name": "低通半径"
           },
-          "link": null,
-          "localized_name": "lowpass_radius"
+          "link": null
         },
         {
           "label": "global_denoise",
@@ -1527,8 +1389,7 @@
           "widget": {
             "name": "全局轻降噪"
           },
-          "link": null,
-          "localized_name": "global_denoise"
+          "link": null
         }
       ],
       "outputs": [
@@ -1539,8 +1400,7 @@
           "slot_index": 0,
           "links": [
             262
-          ],
-          "localized_name": "cleaned_image"
+          ]
         },
         {
           "label": "mask_preview",
@@ -1549,16 +1409,14 @@
           "slot_index": 1,
           "links": [
             258
-          ],
-          "localized_name": "mask_preview"
+          ]
         },
         {
           "label": "skin_mask",
           "name": "肤色遮罩",
           "type": "MASK",
           "slot_index": 2,
-          "links": null,
-          "localized_name": "skin_mask"
+          "links": null
         }
       ],
       "title": "Reference skin pre-clean",
@@ -1600,36 +1458,32 @@
         590
       ],
       "flags": {},
-      "order": 28,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
           "label": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 252,
-          "localized_name": "model"
+          "link": 252
         },
         {
           "label": "positive",
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 253,
-          "localized_name": "positive"
+          "link": 253
         },
         {
           "label": "negative",
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 254,
-          "localized_name": "negative"
+          "link": 254
         },
         {
           "label": "latent_image",
           "name": "latent_image",
           "type": "LATENT",
-          "link": 255,
-          "localized_name": "latent_image"
+          "link": 255
         },
         {
           "label": "seed",
@@ -1638,8 +1492,7 @@
           "widget": {
             "name": "seed"
           },
-          "link": null,
-          "localized_name": "seed"
+          "link": null
         },
         {
           "label": "control_after_generate",
@@ -1648,8 +1501,7 @@
           "widget": {
             "name": "steps"
           },
-          "link": null,
-          "localized_name": "control_after_generate"
+          "link": null
         },
         {
           "label": "steps",
@@ -1658,8 +1510,7 @@
           "widget": {
             "name": "cfg"
           },
-          "link": null,
-          "localized_name": "steps"
+          "link": null
         },
         {
           "label": "cfg",
@@ -1668,8 +1519,7 @@
           "widget": {
             "name": "sampler_name"
           },
-          "link": null,
-          "localized_name": "cfg"
+          "link": null
         },
         {
           "label": "sampler_name",
@@ -1678,8 +1528,7 @@
           "widget": {
             "name": "scheduler"
           },
-          "link": null,
-          "localized_name": "sampler_name"
+          "link": null
         },
         {
           "label": "scheduler",
@@ -1688,8 +1537,7 @@
           "widget": {
             "name": "denoise"
           },
-          "link": 265,
-          "localized_name": "scheduler"
+          "link": 265
         }
       ],
       "outputs": [
@@ -1700,8 +1548,7 @@
           "slot_index": 0,
           "links": [
             256
-          ],
-          "localized_name": "latent"
+          ]
         }
       ],
       "title": "Sharp clean skin, denoise 0.82",
@@ -1735,19 +1582,18 @@
         1432.242637861559
       ],
       "size": [
-        210,
+        241.2935546875,
         278
       ],
       "flags": {},
-      "order": 19,
+      "order": 20,
       "mode": 0,
       "inputs": [
         {
           "label": "images",
           "name": "images",
           "type": "IMAGE",
-          "link": 188,
-          "localized_name": "images"
+          "link": 188
         }
       ],
       "outputs": [
@@ -1790,7 +1636,13 @@
       "mode": 0,
       "inputs": [],
       "outputs": [],
-      "properties": {},
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
       "widgets_values": [
         "Denoise notes:\n\nAround 0.45 preserves composition and pose better, but skin cleanup is weaker.\n\nHigher denoise changes the image more. Around 0.82 is a practical skin-clean preset, but pose fidelity is less guaranteed.\n\nFor portraits, use lower denoise for structure and a second pass or dedicated retouch workflow for skin if needed."
       ],
@@ -1809,15 +1661,14 @@
         1023.4951623984114
       ],
       "flags": {},
-      "order": 30,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
           "label": "images",
           "name": "images",
           "type": "IMAGE",
-          "link": 97,
-          "localized_name": "images"
+          "link": 97
         },
         {
           "label": "filename_prefix",
@@ -1825,8 +1676,7 @@
           "type": "STRING",
           "widget": {
             "name": "filename_prefix"
-          },
-          "localized_name": "filename_prefix"
+          }
         }
       ],
       "outputs": [
@@ -1919,46 +1769,6 @@
       "bgcolor": "#353"
     },
     {
-      "id": 172,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -404.4771591366408,
-        1833.95493811598
-      ],
-      "size": [
-        344.637536579869,
-        78.56715127792563
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "label": "optional_connection",
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null,
-          "localized_name": "optional_connection"
-        }
-      ],
-      "properties": {
-        "matchColors": "",
-        "matchTitle": "Portrait preprocessing",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default",
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
-        }
-      },
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 80,
       "type": "LoraLoaderModelOnly",
       "pos": [
@@ -1970,33 +1780,30 @@
         86.04751802278042
       ],
       "flags": {},
-      "order": 15,
+      "order": 16,
       "mode": 4,
       "inputs": [
         {
           "label": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 125,
-          "localized_name": "model"
+          "link": 125
         },
         {
+          "label": "lora_name",
           "name": "lora_name",
           "type": "COMBO",
           "widget": {
             "name": "lora_name"
-          },
-          "label": "lora_name",
-          "localized_name": "lora_name"
+          }
         },
         {
+          "label": "strength_model",
           "name": "strength_model",
           "type": "FLOAT",
           "widget": {
             "name": "strength_model"
-          },
-          "label": "strength_model",
-          "localized_name": "strength_model"
+          }
         }
       ],
       "outputs": [
@@ -2006,8 +1813,7 @@
           "type": "MODEL",
           "links": [
             133
-          ],
-          "localized_name": "model"
+          ]
         }
       ],
       "properties": {
@@ -2035,11 +1841,11 @@
         1894.8229355199364
       ],
       "size": [
-        200,
+        210,
         58
       ],
       "flags": {},
-      "order": 10,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -2060,19 +1866,19 @@
           "type": "FLOAT",
           "links": [
             265
-          ],
-          "localized_name": "float"
+          ]
         }
       ],
       "title": "Denoise value",
       "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
-        },
         "cnr_id": "comfyui-kjnodes",
         "ver": "988a877bba8d26d23b9e5afb72ab15c36815f211",
-        "Node name for S&R": "FloatConstant"
+        "Node name for S&R": "FloatConstant",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
       },
       "widgets_values": [
         0.82
@@ -2092,11 +1898,17 @@
         343.620924680843
       ],
       "flags": {},
-      "order": 11,
+      "order": 10,
       "mode": 0,
       "inputs": [],
       "outputs": [],
-      "properties": {},
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
       "widgets_values": [
         "Colored symbol / watermark cleaner:\n\nDetects high-contrast black, white, or selected-color strokes such as text, emoji, stickers, captions, watermarks, and colorful icons.\n\nRecommended before both Krea2 Skin-Safe Rebalance and VAEEncode so Krea2 visual tokens do not copy small unwanted structures."
       ],
@@ -2115,7 +1927,7 @@
         1042.2186578495089
       ],
       "flags": {},
-      "order": 12,
+      "order": 11,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2125,14 +1937,12 @@
           "type": "IMAGE",
           "links": [
             178
-          ],
-          "localized_name": "image"
+          ]
         },
         {
           "label": "mask",
           "name": "MASK",
-          "type": "MASK",
-          "localized_name": "mask"
+          "type": "MASK"
         }
       ],
       "properties": {
@@ -2155,6 +1965,86 @@
       ],
       "color": "#232",
       "bgcolor": "#353"
+    },
+    {
+      "id": 176,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -17.77118320360487,
+        2231.572065391762
+      ],
+      "size": [
+        431.10669237782486,
+        81.08017270366054
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "optional_connection",
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "Symbol / watermark preprocessing",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 172,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -404.4771591366408,
+        1833.035026601796
+      ],
+      "size": [
+        344.637536579869,
+        78.56715127792563
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "optional_connection",
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "Portrait preprocessing",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "color": "#323",
+      "bgcolor": "#535"
     }
   ],
   "links": [
@@ -2363,7 +2253,7 @@
       128,
       0,
       169,
-      0,
+      1,
       "IMAGE"
     ],
     [
@@ -2376,18 +2266,6 @@
     ]
   ],
   "groups": [
-    {
-      "id": 11,
-      "title": "Author / channel: T8star-Aix",
-      "bounding": [
-        -943.59777680188,
-        -2426.3067002347216,
-        2836.38525390625,
-        427.2743835449219
-      ],
-      "color": "#3f789e",
-      "flags": {}
-    },
     {
       "id": 13,
       "title": "Workspace: original-size img2img wash",
@@ -2418,7 +2296,7 @@
       "bounding": [
         -538.5135434483941,
         352.35320326263906,
-        140,
+        253.32976352082005,
         80
       ],
       "color": "#b58b2a",
@@ -2498,7 +2376,14 @@
     ],
     "VHS_latentpreviewrate": 0,
     "frontendVersion": "1.45.19",
-    "VHS_latentpreview": false
+    "VHS_latentpreview": false,
+    "ds": {
+      "scale": 0.30735605491428303,
+      "offset": [
+        3382.2820678041417,
+        1375.5831024686117
+      ]
+    }
   },
   "version": 0.4
 }
