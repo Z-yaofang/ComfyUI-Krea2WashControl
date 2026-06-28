@@ -1,0 +1,2504 @@
+{
+  "id": "krea2-turbo-wash-v1-example",
+  "revision": 3,
+  "last_node_id": 175,
+  "last_link_id": 265,
+  "nodes": [
+    {
+      "id": 86,
+      "type": "SetNode",
+      "pos": [
+        -289.7772165129293,
+        -343.965741694387
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "input",
+          "name": "MODEL",
+          "type": "MODEL",
+          "link": 133,
+          "localized_name": "input"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "output",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": null,
+          "localized_name": "output"
+        }
+      ],
+      "title": "Set_Model",
+      "properties": {
+        "Node name for S&R": "SetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "previousName": "模型",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Model"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 56,
+      "type": "CLIPLoader",
+      "pos": [
+        -764.0344338832117,
+        -200.82371106475065
+      ],
+      "size": [
+        450,
+        170
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "clip_name",
+          "name": "clip_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name"
+          }
+        },
+        {
+          "label": "type",
+          "name": "type",
+          "type": "COMBO",
+          "widget": {
+            "name": "type"
+          }
+        },
+        {
+          "label": "device",
+          "name": "device",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "device"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            134
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "directory_invalid": true,
+            "name": "qwen3vl_4b_fp8_scaled.safetensors",
+            "directory": "text_encoders",
+            "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/main/text_encoders/qwen3vl_4b_fp8_scaled.safetensors"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.8",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Qwen\\qwen3vl_4b_fp8_scaled.safetensors",
+        "krea2",
+        "default"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 87,
+      "type": "SetNode",
+      "pos": [
+        -218.02597119916035,
+        -176.54689918357892
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "input",
+          "name": "CLIP",
+          "type": "CLIP",
+          "link": 134,
+          "localized_name": "input"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "output",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": null,
+          "localized_name": "output"
+        }
+      ],
+      "title": "Set_CLIP",
+      "properties": {
+        "Node name for S&R": "SetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "previousName": "CLIP",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "CLIP"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 57,
+      "type": "VAELoader",
+      "pos": [
+        -761.5733040315206,
+        56.240192285023845
+      ],
+      "size": [
+        450,
+        120
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "vae_name",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            135
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "directory_invalid": true,
+            "name": "qwen_image_vae.safetensors",
+            "directory": "vae",
+            "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/main/vae/qwen_image_vae.safetensors"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.8",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Qwen\\qwen_image_vae.safetensors"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 88,
+      "type": "SetNode",
+      "pos": [
+        -233.19219706802969,
+        60.984698026928584
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "input",
+          "name": "VAE",
+          "type": "VAE",
+          "link": 135,
+          "localized_name": "input"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "output",
+          "name": "VAE",
+          "type": "VAE",
+          "links": null,
+          "localized_name": "output"
+        }
+      ],
+      "title": "Set_VAE",
+      "properties": {
+        "Node name for S&R": "SetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "previousName": "VAE",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "VAE"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 55,
+      "type": "UNETLoader",
+      "pos": [
+        -753.4649841806574,
+        -544.238608775157
+      ],
+      "size": [
+        450,
+        140
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "unet_name",
+          "name": "unet_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "unet_name"
+          }
+        },
+        {
+          "label": "weight_dtype",
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "widget": {
+            "name": "weight_dtype"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "model",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            125
+          ],
+          "localized_name": "model"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "directory_invalid": true,
+            "name": "krea2_turbo_fp8_scaled.safetensors",
+            "directory": "diffusion_models",
+            "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/main/diffusion_models/krea2_turbo_fp8_scaled.safetensors"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.8",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "flux\\krea2\\krea2_turbo_bf16.safetensors",
+        "default"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 127,
+      "type": "ConditioningZeroOut",
+      "pos": [
+        -276.16156001189296,
+        1218.7733708342405
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "conditioning",
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 192
+        }
+      ],
+      "outputs": [
+        {
+          "label": "CONDITIONING",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            254
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.0",
+        "Node name for S&R": "ConditioningZeroOut",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 92,
+      "type": "GetNode",
+      "pos": [
+        145.64350813267177,
+        677.3617907625137
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "output",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            252
+          ],
+          "localized_name": "output"
+        }
+      ],
+      "title": "Get_Model",
+      "properties": {
+        "Node name for S&R": "GetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Model"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 90,
+      "type": "GetNode",
+      "pos": [
+        -254.3248346999865,
+        700.3200526578707
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "output",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            136,
+            194,
+            202
+          ],
+          "localized_name": "output"
+        }
+      ],
+      "title": "Get_VAE",
+      "properties": {
+        "Node name for S&R": "GetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "VAE"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 129,
+      "type": "VAEEncode",
+      "pos": [
+        -283.2371835599262,
+        1301.7406487440735
+      ],
+      "size": [
+        255.464453125,
+        57.07597136206232
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "pixels",
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 263,
+          "localized_name": "pixels"
+        },
+        {
+          "label": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 202,
+          "localized_name": "vae"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            255
+          ],
+          "localized_name": "latent"
+        }
+      ],
+      "title": "Encode reference as initial latent",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.0",
+        "Node name for S&R": "VAEEncode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 121,
+      "type": "GetNode",
+      "pos": [
+        -397.3895352729633,
+        1473.330130258375
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "output",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            201
+          ],
+          "localized_name": "output"
+        }
+      ],
+      "title": "Get_Reference_Image",
+      "properties": {
+        "Node name for S&R": "GetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Reference Image"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 120,
+      "type": "SetNode",
+      "pos": [
+        -701.9399528990439,
+        672.4007776449084
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "input",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "link": 178,
+          "localized_name": "input"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "output",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null,
+          "localized_name": "output"
+        }
+      ],
+      "title": "Set_Reference_Image",
+      "properties": {
+        "Node name for S&R": "SetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "previousName": "参考图",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Reference Image"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 54,
+      "type": "VAEDecode",
+      "pos": [
+        538.0805647057176,
+        722.7126684502297
+      ],
+      "size": [
+        167.66873196714073,
+        58.816886256678345
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "samples",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 256,
+          "localized_name": "samples"
+        },
+        {
+          "label": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 136,
+          "localized_name": "vae"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "image",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            97
+          ],
+          "localized_name": "image"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "VAEDecode",
+        "ue_properties": {
+          "version": "7.8",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 91,
+      "type": "GetNode",
+      "pos": [
+        -410.61712634184954,
+        706.2086417622179
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "output",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            193
+          ],
+          "localized_name": "output"
+        }
+      ],
+      "title": "Get_CLIP",
+      "properties": {
+        "Node name for S&R": "GetNode",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "CLIP"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 128,
+      "type": "Krea2WashReferenceSize",
+      "pos": [
+        -406.7104691628117,
+        1596.20618602379
+      ],
+      "size": [
+        346.32043816110854,
+        170.6824477270486
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "reference_image",
+          "name": "参考图",
+          "type": "IMAGE",
+          "link": 201,
+          "localized_name": "reference_image"
+        },
+        {
+          "label": "upscale_method",
+          "name": "缩放算法",
+          "type": "COMBO",
+          "widget": {
+            "name": "缩放算法"
+          },
+          "link": null,
+          "localized_name": "upscale_method"
+        },
+        {
+          "label": "align_multiple",
+          "name": "尺寸对齐倍数",
+          "type": "INT",
+          "widget": {
+            "name": "尺寸对齐倍数"
+          },
+          "link": null,
+          "localized_name": "align_multiple"
+        },
+        {
+          "label": "align_mode",
+          "name": "对齐方式",
+          "type": "COMBO",
+          "widget": {
+            "name": "对齐方式"
+          },
+          "link": null,
+          "localized_name": "align_mode"
+        },
+        {
+          "label": "max_megapixels",
+          "name": "最大百万像素",
+          "type": "FLOAT",
+          "widget": {
+            "name": "最大百万像素"
+          },
+          "link": null,
+          "localized_name": "max_megapixels"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "output_image",
+          "name": "对齐图像",
+          "type": "IMAGE",
+          "links": [
+            188,
+            264
+          ],
+          "localized_name": "output_image"
+        },
+        {
+          "label": "width",
+          "name": "宽度",
+          "type": "INT",
+          "links": null,
+          "localized_name": "width"
+        },
+        {
+          "label": "height",
+          "name": "高度",
+          "type": "INT",
+          "links": null,
+          "localized_name": "height"
+        }
+      ],
+      "title": "Reference size / aspect alignment",
+      "properties": {
+        "aux_id": "Z-yaofang/ComfyUI-Krea2WashControl",
+        "ver": "local",
+        "Node name for S&R": "Krea2WashReferenceSize",
+        "cnr_id": "ComfyUI-Krea2WashControl",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "缩放算法": true,
+            "尺寸对齐倍数": true,
+            "对齐方式": true,
+            "最大百万像素": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "lanczos",
+        1,
+        "nearest",
+        0
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 166,
+      "type": "PreviewImage",
+      "pos": [
+        392.08184876709885,
+        1840.2002808523166
+      ],
+      "size": [
+        247.31576652831427,
+        278
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 258,
+          "localized_name": "images"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "Skin mask preview",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.0",
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 126,
+      "type": "Krea2WashRebalanceSkinSafe",
+      "pos": [
+        -322.6104349769364,
+        793.2797469162804
+      ],
+      "size": [
+        436.05262114923335,
+        374
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 193,
+          "localized_name": "clip"
+        },
+        {
+          "label": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 194,
+          "localized_name": "vae"
+        },
+        {
+          "label": "reference_image",
+          "name": "参考图",
+          "type": "IMAGE",
+          "link": 195,
+          "localized_name": "reference_image"
+        },
+        {
+          "label": "prompt",
+          "name": "提示词",
+          "type": "STRING",
+          "widget": {
+            "name": "提示词"
+          },
+          "link": 257,
+          "localized_name": "prompt"
+        },
+        {
+          "label": "reference_strength",
+          "name": "参考强度",
+          "type": "FLOAT",
+          "widget": {
+            "name": "参考强度"
+          },
+          "link": null,
+          "localized_name": "reference_strength"
+        },
+        {
+          "label": "text_end_percent",
+          "name": "文字结束进度",
+          "type": "FLOAT",
+          "widget": {
+            "name": "文字结束进度"
+          },
+          "link": null,
+          "localized_name": "text_end_percent"
+        },
+        {
+          "label": "image_start_percent",
+          "name": "图像开始进度",
+          "type": "FLOAT",
+          "widget": {
+            "name": "图像开始进度"
+          },
+          "link": null,
+          "localized_name": "image_start_percent"
+        },
+        {
+          "label": "rebalance_multiplier",
+          "name": "重平衡倍率",
+          "type": "FLOAT",
+          "widget": {
+            "name": "重平衡倍率"
+          },
+          "link": null,
+          "localized_name": "rebalance_multiplier"
+        },
+        {
+          "label": "guidance_strength",
+          "name": "差异引导强度",
+          "type": "FLOAT",
+          "widget": {
+            "name": "差异引导强度"
+          },
+          "link": null,
+          "localized_name": "guidance_strength"
+        },
+        {
+          "label": "main_layer_weights",
+          "name": "主层权重",
+          "type": "STRING",
+          "widget": {
+            "name": "主层权重"
+          },
+          "link": null,
+          "localized_name": "main_layer_weights"
+        },
+        {
+          "label": "subject_prefix",
+          "name": "主体前缀",
+          "type": "STRING",
+          "widget": {
+            "name": "主体前缀"
+          },
+          "link": null,
+          "localized_name": "subject_prefix"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "conditioning",
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "links": [
+            192,
+            253
+          ],
+          "localized_name": "conditioning"
+        }
+      ],
+      "title": "Skin-safe rebalance",
+      "properties": {
+        "aux_id": "Z-yaofang/ComfyUI-Krea2WashControl",
+        "ver": "local",
+        "Node name for S&R": "Krea2WashRebalanceSkinSafe",
+        "cnr_id": "ComfyUI-Krea2WashControl",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "提示词": true,
+            "参考强度": true,
+            "文字结束进度": true,
+            "图像开始进度": true,
+            "重平衡倍率": true,
+            "差异引导强度": true,
+            "主层权重": true,
+            "主体前缀": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "",
+        0.55,
+        0.1,
+        0.08,
+        1.65,
+        0.04,
+        "0.0,0.7,0.0,0.0,0.0,0.0,0.0,0.7,1.4,0.7,0.7,0.7",
+        "(same composition:1.25) (similar pose and body proportions:1.2) (clean even bright youthful skin:1.7) (smooth natural retouched skin:1.45) (spotless face:1.65) (no freckles:1.55) (no moles:1.45) (no dark spots:1.65) (no horizontal skin lines:1.55) (no acne:1.45) (no watermark:1.5) (no text:1.4) (no emoji:1.4) (no stickers:1.4) (no overlay symbols:1.4) ",
+        true,
+        false
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 169,
+      "type": "Krea2WashWatermarkCleaner",
+      "pos": [
+        20.246926346560667,
+        1818.088941196611
+      ],
+      "size": [
+        256.5049168506582,
+        318.45216792146675
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 20,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "image",
+          "localized_name": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 264
+        },
+        {
+          "label": "clean_strength",
+          "localized_name": "clean_strength",
+          "name": "clean_strength",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "clean_strength"
+          }
+        },
+        {
+          "label": "white_threshold",
+          "localized_name": "white_threshold",
+          "name": "white_threshold",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "white_threshold"
+          }
+        },
+        {
+          "label": "contrast_threshold",
+          "localized_name": "contrast_threshold",
+          "name": "contrast_threshold",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "contrast_threshold"
+          }
+        },
+        {
+          "label": "saturation_limit",
+          "localized_name": "saturation_limit",
+          "name": "saturation_limit",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "saturation_limit"
+          }
+        },
+        {
+          "label": "stroke_radius",
+          "localized_name": "stroke_radius",
+          "name": "stroke_radius",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "stroke_radius"
+          }
+        },
+        {
+          "label": "mask_expand",
+          "localized_name": "mask_expand",
+          "name": "mask_expand",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "mask_expand"
+          }
+        },
+        {
+          "label": "patch_radius",
+          "localized_name": "patch_radius",
+          "name": "patch_radius",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "patch_radius"
+          }
+        },
+        {
+          "label": "color_mode",
+          "localized_name": "color_mode",
+          "name": "color_mode",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "color_mode"
+          }
+        },
+        {
+          "label": "custom_colors",
+          "localized_name": "custom_colors",
+          "name": "custom_colors",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "custom_colors"
+          }
+        },
+        {
+          "label": "color_tolerance",
+          "localized_name": "color_tolerance",
+          "name": "color_tolerance",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "color_tolerance"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "label": "cleaned_image",
+          "name": "清理图像",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            195,
+            259
+          ],
+          "localized_name": "cleaned_image"
+        },
+        {
+          "label": "watermark_preview",
+          "name": "彩色水印预览",
+          "type": "IMAGE",
+          "slot_index": 1,
+          "links": null,
+          "localized_name": "watermark_preview"
+        },
+        {
+          "label": "watermark_mask",
+          "name": "彩色水印遮罩",
+          "type": "MASK",
+          "slot_index": 2,
+          "links": null,
+          "localized_name": "watermark_mask"
+        }
+      ],
+      "title": "Colored symbol / watermark pre-clean",
+      "properties": {
+        "aux_id": "Z-yaofang/ComfyUI-Krea2WashControl",
+        "ver": "local",
+        "Node name for S&R": "Krea2WashWatermarkCleaner",
+        "cnr_id": "ComfyUI-Krea2WashControl",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "清理强度": true,
+            "白色阈值": true,
+            "局部对比阈值": true,
+            "低饱和上限": true,
+            "笔画半径": true,
+            "遮罩扩张": true,
+            "修补半径": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        1,
+        0.68,
+        0.045,
+        0.35,
+        7,
+        6,
+        19,
+        "black_white",
+        "#ffffff,#000000",
+        0.16
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 167,
+      "type": "Krea2WashSkinSpotCleaner",
+      "pos": [
+        678.4171497181718,
+        1482.3536391960783
+      ],
+      "size": [
+        242.72766526636394,
+        255.8187371497902
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "图像",
+          "type": "IMAGE",
+          "link": 262,
+          "localized_name": "image"
+        },
+        {
+          "label": "clean_strength",
+          "name": "清理强度",
+          "type": "FLOAT",
+          "widget": {
+            "name": "清理强度"
+          },
+          "link": null,
+          "localized_name": "clean_strength"
+        },
+        {
+          "label": "spot_threshold",
+          "name": "暗点阈值",
+          "type": "FLOAT",
+          "widget": {
+            "name": "暗点阈值"
+          },
+          "link": null,
+          "localized_name": "spot_threshold"
+        },
+        {
+          "label": "spot_expand",
+          "name": "暗点扩张",
+          "type": "INT",
+          "widget": {
+            "name": "暗点扩张"
+          },
+          "link": null,
+          "localized_name": "spot_expand"
+        },
+        {
+          "label": "patch_radius",
+          "name": "修补半径",
+          "type": "INT",
+          "widget": {
+            "name": "修补半径"
+          },
+          "link": null,
+          "localized_name": "patch_radius"
+        },
+        {
+          "label": "skin_mask_expand",
+          "name": "肤色遮罩扩张",
+          "type": "INT",
+          "widget": {
+            "name": "肤色遮罩扩张"
+          },
+          "link": null,
+          "localized_name": "skin_mask_expand"
+        },
+        {
+          "label": "global_skin_smooth",
+          "name": "全局肤色平滑",
+          "type": "FLOAT",
+          "widget": {
+            "name": "全局肤色平滑"
+          },
+          "link": null,
+          "localized_name": "global_skin_smooth"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "cleaned_image",
+          "name": "清理图像",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            263
+          ],
+          "localized_name": "cleaned_image"
+        },
+        {
+          "label": "spot_preview",
+          "name": "暗点预览",
+          "type": "IMAGE",
+          "slot_index": 1,
+          "links": [
+            261
+          ],
+          "localized_name": "spot_preview"
+        },
+        {
+          "label": "spot_mask",
+          "name": "暗点遮罩",
+          "type": "MASK",
+          "slot_index": 2,
+          "links": null,
+          "localized_name": "spot_mask"
+        }
+      ],
+      "title": "Skin dark spot cleanup before VAE",
+      "properties": {
+        "aux_id": "Z-yaofang/ComfyUI-Krea2WashControl",
+        "ver": "501fe5379801a311f9a0a66a987bb3f4993ee2ea",
+        "Node name for S&R": "Krea2WashSkinSpotCleaner",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "清理强度": true,
+            "暗点阈值": true,
+            "暗点扩张": true,
+            "修补半径": true,
+            "肤色遮罩扩张": true,
+            "全局肤色平滑": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        1,
+        0.022,
+        3,
+        7,
+        5,
+        0.04
+      ]
+    },
+    {
+      "id": 168,
+      "type": "PreviewImage",
+      "pos": [
+        696.2718548640639,
+        1804.3228921507186
+      ],
+      "size": [
+        235.60810804904418,
+        281.0526381347672
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 261,
+          "localized_name": "images"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "Dark spot mask preview",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.0",
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 165,
+      "type": "Krea2WashLatentSkinCleaner",
+      "pos": [
+        367.6081379652258,
+        1495.8557410452815
+      ],
+      "size": [
+        268.01160480197063,
+        255.8187371497902
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "图像",
+          "type": "IMAGE",
+          "link": 259,
+          "localized_name": "image"
+        },
+        {
+          "label": "skin_smooth",
+          "name": "肤质平滑",
+          "type": "FLOAT",
+          "widget": {
+            "name": "肤质平滑"
+          },
+          "link": null,
+          "localized_name": "skin_smooth"
+        },
+        {
+          "label": "skin_mask_expand",
+          "name": "肤色遮罩扩张",
+          "type": "INT",
+          "widget": {
+            "name": "肤色遮罩扩张"
+          },
+          "link": null,
+          "localized_name": "skin_mask_expand"
+        },
+        {
+          "label": "detail_keep",
+          "name": "细节保留",
+          "type": "FLOAT",
+          "widget": {
+            "name": "细节保留"
+          },
+          "link": null,
+          "localized_name": "detail_keep"
+        },
+        {
+          "label": "blur_radius",
+          "name": "主模糊半径",
+          "type": "INT",
+          "widget": {
+            "name": "主模糊半径"
+          },
+          "link": null,
+          "localized_name": "blur_radius"
+        },
+        {
+          "label": "lowpass_radius",
+          "name": "低通半径",
+          "type": "INT",
+          "widget": {
+            "name": "低通半径"
+          },
+          "link": null,
+          "localized_name": "lowpass_radius"
+        },
+        {
+          "label": "global_denoise",
+          "name": "全局轻降噪",
+          "type": "FLOAT",
+          "widget": {
+            "name": "全局轻降噪"
+          },
+          "link": null,
+          "localized_name": "global_denoise"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "cleaned_image",
+          "name": "清理图像",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            262
+          ],
+          "localized_name": "cleaned_image"
+        },
+        {
+          "label": "mask_preview",
+          "name": "遮罩预览",
+          "type": "IMAGE",
+          "slot_index": 1,
+          "links": [
+            258
+          ],
+          "localized_name": "mask_preview"
+        },
+        {
+          "label": "skin_mask",
+          "name": "肤色遮罩",
+          "type": "MASK",
+          "slot_index": 2,
+          "links": null,
+          "localized_name": "skin_mask"
+        }
+      ],
+      "title": "Reference skin pre-clean",
+      "properties": {
+        "aux_id": "Z-yaofang/ComfyUI-Krea2WashControl",
+        "ver": "501fe5379801a311f9a0a66a987bb3f4993ee2ea",
+        "Node name for S&R": "Krea2WashLatentSkinCleaner",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "肤质平滑": true,
+            "肤色遮罩扩张": true,
+            "细节保留": true,
+            "主模糊半径": true,
+            "低通半径": true,
+            "全局轻降噪": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        0.75,
+        7,
+        0.25,
+        9,
+        3,
+        0.08
+      ]
+    },
+    {
+      "id": 164,
+      "type": "KSampler",
+      "pos": [
+        179.8967340114274,
+        720.3561355446182
+      ],
+      "size": [
+        320,
+        590
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 252,
+          "localized_name": "model"
+        },
+        {
+          "label": "positive",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 253,
+          "localized_name": "positive"
+        },
+        {
+          "label": "negative",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 254,
+          "localized_name": "negative"
+        },
+        {
+          "label": "latent_image",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 255,
+          "localized_name": "latent_image"
+        },
+        {
+          "label": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null,
+          "localized_name": "seed"
+        },
+        {
+          "label": "control_after_generate",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": null,
+          "localized_name": "control_after_generate"
+        },
+        {
+          "label": "steps",
+          "name": "cfg",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg"
+          },
+          "link": null,
+          "localized_name": "steps"
+        },
+        {
+          "label": "cfg",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": null,
+          "localized_name": "cfg"
+        },
+        {
+          "label": "sampler_name",
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": null,
+          "localized_name": "sampler_name"
+        },
+        {
+          "label": "scheduler",
+          "name": "denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "denoise"
+          },
+          "link": 265,
+          "localized_name": "scheduler"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "latent",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            256
+          ],
+          "localized_name": "latent"
+        }
+      ],
+      "title": "Sharp clean skin, denoise 0.82",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "KSampler",
+        "ue_properties": {
+          "version": "7.8",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        1088543962559205,
+        "randomize",
+        10,
+        1,
+        "euler",
+        "simple",
+        0.82
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 125,
+      "type": "PreviewImage",
+      "pos": [
+        -16.935235257051755,
+        1432.242637861559
+      ],
+      "size": [
+        210,
+        278
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 188,
+          "localized_name": "images"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE"
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "Output-size reference preview",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.0",
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 170,
+      "type": "Note",
+      "pos": [
+        -697.9712403144358,
+        2011.1369927288797
+      ],
+      "size": [
+        210,
+        277.38931688786715
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Denoise notes:\n\nAround 0.45 preserves composition and pose better, but skin cleanup is weaker.\n\nHigher denoise changes the image more. Around 0.82 is a practical skin-clean preset, but pose fidelity is less guaranteed.\n\nFor portraits, use lower denoise for structure and a second pass or dedicated retouch workflow for skin if needed."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 29,
+      "type": "SaveImage",
+      "pos": [
+        -1670.9628237279276,
+        731.4838377585738
+      ],
+      "size": [
+        537.8210743396867,
+        1023.4951623984114
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 97,
+          "localized_name": "images"
+        },
+        {
+          "label": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "localized_name": "filename_prefix"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "image_urls",
+          "name": "images",
+          "type": "IMAGE"
+        },
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.25.0",
+        "Node name for S&R": "SaveImage",
+        "ue_properties": {
+          "version": "7.8",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Krea2_wash_SharpCleanSkin-064"
+      ]
+    },
+    {
+      "id": 99,
+      "type": "CR Text",
+      "pos": [
+        -1050.1233050103235,
+        1876.9156666339554
+      ],
+      "size": [
+        288.741796875,
+        186.47761005067218
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "text",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null,
+          "localized_name": "text"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "text",
+          "name": "text",
+          "type": "*",
+          "links": [
+            257
+          ],
+          "localized_name": "text"
+        },
+        {
+          "label": "show_help",
+          "name": "show_help",
+          "type": "STRING",
+          "links": null,
+          "localized_name": "show_help"
+        }
+      ],
+      "title": "Reverse caption / manual supplement",
+      "properties": {
+        "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+        "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca",
+        "Node name for S&R": "CR Text",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "Emphasize clean, even skin glow and natural clothing folds. No dot-like dark spots, no horizontal skin lines, no dirty color patches. No extra characters, animals, or props. Clean scene, warm mood."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 172,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -404.4771591366408,
+        1833.95493811598
+      ],
+      "size": [
+        344.637536579869,
+        78.56715127792563
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "optional_connection",
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null,
+          "localized_name": "optional_connection"
+        }
+      ],
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "Portrait preprocessing",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 80,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -725.6655668194453,
+        -343.8287448147677
+      ],
+      "size": [
+        399.5195576930555,
+        86.04751802278042
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 125,
+          "localized_name": "model"
+        },
+        {
+          "name": "lora_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "lora_name"
+          },
+          "label": "lora_name",
+          "localized_name": "lora_name"
+        },
+        {
+          "name": "strength_model",
+          "type": "FLOAT",
+          "widget": {
+            "name": "strength_model"
+          },
+          "label": "strength_model",
+          "localized_name": "strength_model"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "model",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            133
+          ],
+          "localized_name": "model"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.26.0",
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "ue_properties": {
+          "version": "7.8",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "None",
+        0
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 175,
+      "type": "FloatConstant",
+      "pos": [
+        -697.1325081447952,
+        1894.8229355199364
+      ],
+      "size": [
+        200,
+        58
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "value",
+          "name": "value",
+          "type": "FLOAT",
+          "widget": {
+            "name": "value"
+          },
+          "link": null,
+          "localized_name": "value"
+        }
+      ],
+      "outputs": [
+        {
+          "label": "float",
+          "name": "value",
+          "type": "FLOAT",
+          "links": [
+            265
+          ],
+          "localized_name": "float"
+        }
+      ],
+      "title": "Denoise value",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "988a877bba8d26d23b9e5afb72ab15c36815f211",
+        "Node name for S&R": "FloatConstant"
+      },
+      "widgets_values": [
+        0.82
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 171,
+      "type": "Note",
+      "pos": [
+        -379.87074725129526,
+        1970.9808417470315
+      ],
+      "size": [
+        313.94688504253895,
+        343.620924680843
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Colored symbol / watermark cleaner:\n\nDetects high-contrast black, white, or selected-color strokes such as text, emoji, stickers, captions, watermarks, and colorful icons.\n\nRecommended before both Krea2 Skin-Safe Rebalance and VAEEncode so Krea2 visual tokens do not copy small unwanted structures."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 111,
+      "type": "LoadImage",
+      "pos": [
+        -1039.7068456934696,
+        716.4287720322152
+      ],
+      "size": [
+        549.1763880978444,
+        1042.2186578495089
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "image",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            178
+          ],
+          "localized_name": "image"
+        },
+        {
+          "label": "mask",
+          "name": "MASK",
+          "type": "MASK",
+          "localized_name": "mask"
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.76",
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.1"
+        },
+        "widget_ue_connectable": {
+          "image": true,
+          "upload": true
+        }
+      },
+      "widgets_values": [
+        "example_reference.png",
+        "image"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    }
+  ],
+  "links": [
+    [
+      97,
+      54,
+      0,
+      29,
+      0,
+      "IMAGE"
+    ],
+    [
+      125,
+      55,
+      0,
+      80,
+      0,
+      "MODEL"
+    ],
+    [
+      133,
+      80,
+      0,
+      86,
+      0,
+      "MODEL"
+    ],
+    [
+      134,
+      56,
+      0,
+      87,
+      0,
+      "CLIP"
+    ],
+    [
+      135,
+      57,
+      0,
+      88,
+      0,
+      "VAE"
+    ],
+    [
+      136,
+      90,
+      0,
+      54,
+      1,
+      "VAE"
+    ],
+    [
+      178,
+      111,
+      0,
+      120,
+      0,
+      "IMAGE"
+    ],
+    [
+      188,
+      128,
+      0,
+      125,
+      0,
+      "IMAGE"
+    ],
+    [
+      192,
+      126,
+      0,
+      127,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      193,
+      91,
+      0,
+      126,
+      0,
+      "CLIP"
+    ],
+    [
+      194,
+      90,
+      0,
+      126,
+      1,
+      "VAE"
+    ],
+    [
+      195,
+      169,
+      0,
+      126,
+      2,
+      "IMAGE"
+    ],
+    [
+      201,
+      121,
+      0,
+      128,
+      0,
+      "IMAGE"
+    ],
+    [
+      202,
+      90,
+      0,
+      129,
+      1,
+      "VAE"
+    ],
+    [
+      252,
+      92,
+      0,
+      164,
+      0,
+      "MODEL"
+    ],
+    [
+      253,
+      126,
+      0,
+      164,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      254,
+      127,
+      0,
+      164,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      255,
+      129,
+      0,
+      164,
+      3,
+      "LATENT"
+    ],
+    [
+      256,
+      164,
+      0,
+      54,
+      0,
+      "LATENT"
+    ],
+    [
+      257,
+      99,
+      0,
+      126,
+      3,
+      "STRING"
+    ],
+    [
+      258,
+      165,
+      1,
+      166,
+      0,
+      "IMAGE"
+    ],
+    [
+      259,
+      169,
+      0,
+      165,
+      0,
+      "IMAGE"
+    ],
+    [
+      261,
+      167,
+      1,
+      168,
+      0,
+      "IMAGE"
+    ],
+    [
+      262,
+      165,
+      0,
+      167,
+      0,
+      "IMAGE"
+    ],
+    [
+      263,
+      167,
+      0,
+      129,
+      0,
+      "IMAGE"
+    ],
+    [
+      264,
+      128,
+      0,
+      169,
+      0,
+      "IMAGE"
+    ],
+    [
+      265,
+      175,
+      0,
+      164,
+      9,
+      "FLOAT"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 11,
+      "title": "Author / channel: T8star-Aix",
+      "bounding": [
+        -943.59777680188,
+        -2426.3067002347216,
+        2836.38525390625,
+        427.2743835449219
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 13,
+      "title": "Workspace: original-size img2img wash",
+      "bounding": [
+        -419.40456404768884,
+        623.2465093517557,
+        1200,
+        760
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 14,
+      "title": "Model area (optional character/style LoRA)",
+      "bounding": [
+        -779.670390752917,
+        -646.4013310965468,
+        814.8699524427394,
+        844.5006294899799
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 19,
+      "title": "Krea2 wash workflow",
+      "bounding": [
+        -538.5135434483941,
+        352.35320326263906,
+        140,
+        80
+      ],
+      "color": "#b58b2a",
+      "flags": {}
+    },
+    {
+      "id": 20,
+      "title": "Image loading",
+      "bounding": [
+        -1085.251746308653,
+        616.8306158301704,
+        641.6770015887637,
+        1170.6280658029025
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 21,
+      "title": "Preprocessing",
+      "bounding": [
+        -420.8525470105219,
+        1400.1243068595943,
+        386.73328392901954,
+        730.8207971965305
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 22,
+      "title": "Prompt and denoise value",
+      "bounding": [
+        -1084.7888942645734,
+        1799.8915938480282,
+        645.5310823889715,
+        321.0179274653342
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 23,
+      "title": "Symbol / watermark preprocessing",
+      "bounding": [
+        -12.724369868497813,
+        1732.1984533478665,
+        337.0336333074231,
+        425.49236817142173
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 24,
+      "title": "Portrait preprocessing (may soften details)",
+      "bounding": [
+        346.88986456117533,
+        1405.2899739275547,
+        625.9680391420994,
+        726.5419166737311
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "VHS_KeepIntermediate": true,
+    "links_added_by_ue": [],
+    "VHS_MetadataImage": true,
+    "ue_links": [],
+    "0246.VERSION": [
+      0,
+      0,
+      4
+    ],
+    "VHS_latentpreviewrate": 0,
+    "frontendVersion": "1.45.19",
+    "VHS_latentpreview": false
+  },
+  "version": 0.4
+}

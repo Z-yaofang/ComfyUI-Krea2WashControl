@@ -373,6 +373,25 @@ def _parse_color_list(color_text):
     return colors
 
 
+def _normalize_color_mode(color_mode):
+    aliases = {
+        "black_white": "黑白",
+        "black+white": "黑白",
+        "black white": "黑白",
+        "bw": "黑白",
+        "white": "白色",
+        "black": "黑色",
+        "custom": "自定义",
+        "black_white+custom": "黑白+自定义",
+        "black+white+custom": "黑白+自定义",
+        "bw+custom": "黑白+自定义",
+    }
+    if color_mode is None:
+        return "黑白"
+    mode = str(color_mode).strip()
+    return aliases.get(mode.lower(), mode)
+
+
 def _skin_likeness_mask(image):
     img = image.float().clamp(0.0, 1.0)
     r = img[..., 0]
@@ -704,6 +723,8 @@ class Krea2WashWatermarkCleaner:
 
         if not _COMFY_AVAILABLE:
             raise RuntimeError("Krea 2 Wash Control requires ComfyUI.")
+
+        color_mode = _normalize_color_mode(color_mode)
 
         img = image.float().clamp(0.0, 1.0)
         r = img[..., 0]

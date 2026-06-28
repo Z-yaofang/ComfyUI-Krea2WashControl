@@ -66,6 +66,16 @@ Reference image
 
 Also connect the cleaned image from `Krea2 Colored Symbol / Watermark Cleaner` to `Krea2 Skin-Safe Rebalance`. Do not feed a source image with obvious watermarks, captions, stickers, or symbols directly into Krea2 visual reference conditioning, because the model may copy or amplify them.
 
+## Example Workflow
+
+An example ComfyUI workflow is included at:
+
+```text
+workflows/krea2-turbo-wash-v1.json
+```
+
+It is an original-size Krea2 Turbo img2img wash workflow with reference-size preservation, colored symbol/watermark preprocessing, skin-safe rebalance conditioning, and skin spot cleanup before VAE encoding.
+
 ## Installation
 
 Clone this repository into your ComfyUI `custom_nodes` directory:
