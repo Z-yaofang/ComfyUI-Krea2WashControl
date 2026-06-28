@@ -79,6 +79,6 @@ Restart ComfyUI after installation or updates.
 ## Notes
 
 - This plugin does not include the Krea2 model itself.
-- The current node UI labels are localized for the author's local Chinese ComfyUI setup.
+- Node labels are currently localized in the included locale files and can be adapted for other ComfyUI setups.
 - If ComfyUI still shows old node parameters after an update, restart ComfyUI and force-refresh the browser with `Ctrl+F5`.
 - The cleaners are preprocessing helpers for Krea2 wash workflows. They are not full face restoration, inpainting, or general-purpose retouching tools.
