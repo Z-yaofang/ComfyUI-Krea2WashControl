@@ -309,6 +309,70 @@ def _white_tophat(mask, radius):
     return (mask - opened).clamp(0.0, 1.0)
 
 
+def _black_tophat(mask, radius):
+    dilated = _max_pool_mask(mask, radius)
+    closed = _min_pool_mask(dilated, radius)
+    return (closed - mask).clamp(0.0, 1.0)
+
+
+def _parse_color_list(color_text):
+    named = {
+        "白": (1.0, 1.0, 1.0),
+        "白色": (1.0, 1.0, 1.0),
+        "黑": (0.0, 0.0, 0.0),
+        "黑色": (0.0, 0.0, 0.0),
+        "红": (1.0, 0.0, 0.0),
+        "红色": (1.0, 0.0, 0.0),
+        "绿": (0.0, 1.0, 0.0),
+        "绿色": (0.0, 1.0, 0.0),
+        "蓝": (0.0, 0.25, 1.0),
+        "蓝色": (0.0, 0.25, 1.0),
+        "黄": (1.0, 0.9, 0.0),
+        "黄色": (1.0, 0.9, 0.0),
+        "粉": (1.0, 0.25, 0.75),
+        "粉色": (1.0, 0.25, 0.75),
+        "紫": (0.65, 0.25, 1.0),
+        "紫色": (0.65, 0.25, 1.0),
+        "青": (0.0, 0.85, 1.0),
+        "青色": (0.0, 0.85, 1.0),
+        "橙": (1.0, 0.45, 0.0),
+        "橙色": (1.0, 0.45, 0.0),
+        "white": (1.0, 1.0, 1.0),
+        "black": (0.0, 0.0, 0.0),
+        "red": (1.0, 0.0, 0.0),
+        "green": (0.0, 1.0, 0.0),
+        "blue": (0.0, 0.25, 1.0),
+        "yellow": (1.0, 0.9, 0.0),
+        "pink": (1.0, 0.25, 0.75),
+        "purple": (0.65, 0.25, 1.0),
+        "cyan": (0.0, 0.85, 1.0),
+        "orange": (1.0, 0.45, 0.0),
+    }
+    colors = []
+    if not color_text:
+        return colors
+    for raw in str(color_text).replace("，", ",").replace(";", ",").split(","):
+        item = raw.strip()
+        if not item:
+            continue
+        item_lower = item.lower()
+        if item_lower in named:
+            colors.append(named[item_lower])
+            continue
+        if item in named:
+            colors.append(named[item])
+            continue
+        if item.startswith("#"):
+            item = item[1:]
+        if item.lower().startswith("0x"):
+            item = item[2:]
+        if len(item) == 3 and all(c in "0123456789abcdefABCDEF" for c in item):
+            item = "".join(c * 2 for c in item)
+        if len(item) == 6 and all(c in "0123456789abcdefABCDEF" for c in item):
+            colors.append(tuple(int(item[i:i + 2], 16) / 255.0 for i in (0, 2, 4)))
+    return colors
+
+
 def _skin_likeness_mask(image):
     img = image.float().clamp(0.0, 1.0)
     r = img[..., 0]
@@ -598,6 +662,8 @@ class Krea2WashReferenceSize:
 
 
 class Krea2WashWatermarkCleaner:
+    color_modes = ["黑白", "白色", "黑色", "自定义", "黑白+自定义"]
+
     @classmethod
     def INPUT_TYPES(cls):
         return {"required": {
@@ -609,10 +675,17 @@ class Krea2WashWatermarkCleaner:
             "笔画半径": ("INT", {"default": 7, "min": 1, "max": 31, "step": 2}),
             "遮罩扩张": ("INT", {"default": 5, "min": 0, "max": 24, "step": 1}),
             "修补半径": ("INT", {"default": 17, "min": 3, "max": 63, "step": 2}),
+            "目标颜色模式": (cls.color_modes, {"default": "黑白"}),
+            "自定义颜色": ("STRING", {
+                "default": "#ffffff,#000000",
+                "multiline": False,
+                "tooltip": "支持 #RRGGBB、#RGB、0xRRGGBB，也支持中文色名：黑、白、红、绿、蓝、黄、粉、紫、青、橙。多个颜色用逗号分隔。",
+            }),
+            "颜色容差": ("FLOAT", {"default": 0.16, "min": 0.02, "max": 0.80, "step": 0.01}),
         }}
 
     RETURN_TYPES = ("IMAGE", "IMAGE", "MASK")
-    RETURN_NAMES = ("清理图像", "水印预览", "水印遮罩")
+    RETURN_NAMES = ("清理图像", "彩色水印预览", "彩色水印遮罩")
     FUNCTION = "main"
     CATEGORY = "conditioning/Krea2洗图"
 
@@ -625,6 +698,9 @@ class Krea2WashWatermarkCleaner:
         stroke_radius = _kw(kwargs, "笔画半径", "stroke_radius", 7)
         mask_expand = _kw(kwargs, "遮罩扩张", "mask_expand", 5)
         patch_radius = _kw(kwargs, "修补半径", "patch_radius", 17)
+        color_mode = _kw(kwargs, "目标颜色模式", "color_mode", "黑白")
+        custom_colors = _kw(kwargs, "自定义颜色", "custom_colors", "#ffffff,#000000")
+        color_tolerance = _kw(kwargs, "颜色容差", "color_tolerance", 0.16)
 
         if not _COMFY_AVAILABLE:
             raise RuntimeError("Krea 2 Wash Control requires ComfyUI.")
@@ -639,15 +715,41 @@ class Krea2WashWatermarkCleaner:
         saturation = maxc - minc
 
         top_hat = _white_tophat(y, int(stroke_radius))
+        bottom_hat = _black_tophat(y, int(stroke_radius))
         local = _gaussian_blur_nhwc(img, max(int(patch_radius), 3))
         local_y = 0.299 * local[..., 0] + 0.587 * local[..., 1] + 0.114 * local[..., 2]
         local_contrast = (y - local_y).clamp(0.0, 1.0)
+        dark_contrast = (local_y - y).clamp(0.0, 1.0)
 
-        bright = torch.sigmoid((y - float(white_threshold)) / 0.035)
         pale = torch.sigmoid((float(saturation_limit) - saturation) / 0.04)
-        stroke = torch.sigmoid((top_hat - float(contrast_threshold)) / 0.018)
-        contrast = torch.sigmoid((local_contrast - float(contrast_threshold)) / 0.018)
-        mask = (bright * pale * torch.maximum(stroke, contrast)).clamp(0.0, 1.0)
+        stroke_white = torch.sigmoid((top_hat - float(contrast_threshold)) / 0.018)
+        stroke_black = torch.sigmoid((bottom_hat - float(contrast_threshold)) / 0.018)
+        contrast_white = torch.sigmoid((local_contrast - float(contrast_threshold)) / 0.018)
+        contrast_black = torch.sigmoid((dark_contrast - float(contrast_threshold)) / 0.018)
+
+        white_mask = torch.zeros_like(y)
+        black_mask = torch.zeros_like(y)
+        custom_mask = torch.zeros_like(y)
+        if color_mode in ("黑白", "白色", "黑白+自定义"):
+            bright = torch.sigmoid((y - float(white_threshold)) / 0.035)
+            white_mask = (bright * pale * torch.maximum(stroke_white, contrast_white)).clamp(0.0, 1.0)
+        if color_mode in ("黑白", "黑色", "黑白+自定义"):
+            dark_threshold = max(0.0, 1.0 - float(white_threshold))
+            dark = torch.sigmoid((dark_threshold - y) / 0.035)
+            black_mask = (dark * pale * torch.maximum(stroke_black, contrast_black)).clamp(0.0, 1.0)
+        if color_mode in ("自定义", "黑白+自定义"):
+            colors = _parse_color_list(custom_colors)
+            if colors:
+                rgb = img[..., :3]
+                edge = torch.maximum(torch.maximum(stroke_white, stroke_black), torch.maximum(contrast_white, contrast_black))
+                tol = max(float(color_tolerance), 0.01)
+                for color in colors:
+                    target = torch.tensor(color, dtype=rgb.dtype, device=rgb.device).view(1, 1, 1, 3)
+                    dist = torch.sqrt(((rgb - target) ** 2).sum(dim=-1) / 3.0)
+                    color_match = torch.sigmoid((tol - dist) / max(tol * 0.25, 0.01))
+                    custom_mask = torch.maximum(custom_mask, color_match * edge)
+
+        mask = torch.maximum(torch.maximum(white_mask, black_mask), custom_mask).clamp(0.0, 1.0)
 
         if mask_expand > 0:
             mask = _max_pool_mask(mask, int(mask_expand))
@@ -658,9 +760,9 @@ class Krea2WashWatermarkCleaner:
         cleaned = img * (1.0 - mask.unsqueeze(-1)) + repaired * mask.unsqueeze(-1)
 
         preview = torch.stack([
+            torch.maximum(white_mask, custom_mask).clamp(0.0, 1.0),
             mask.clamp(0.0, 1.0),
-            mask.clamp(0.0, 1.0),
-            torch.zeros_like(mask),
+            torch.maximum(black_mask, custom_mask * 0.35).clamp(0.0, 1.0),
         ], dim=-1)
         return (cleaned.clamp(0.0, 1.0).to(image.dtype), preview.to(image.dtype), mask)
 
@@ -809,7 +911,7 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     "Krea2WashRebalanceSkinSafe": "Krea2洗图重平衡（肤质安全）",
     "Krea2WashReferenceSize": "Krea2洗图参考尺寸",
-    "Krea2WashWatermarkCleaner": "Krea2洗图白色符号水印清理",
+    "Krea2WashWatermarkCleaner": "Krea2洗图彩色符号水印清理",
     "Krea2WashLatentSkinCleaner": "Krea2洗图Latent肤质清理",
     "Krea2WashSkinSpotCleaner": "Krea2洗图皮肤暗点清理",
 }
