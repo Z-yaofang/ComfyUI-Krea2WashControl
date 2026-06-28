@@ -286,6 +286,29 @@ def _gaussian_blur_nhwc(image, radius):
     return x.movedim(1, -1).to(dtype=orig_dtype)
 
 
+def _max_pool_mask(mask, radius):
+    radius = int(radius)
+    if radius <= 0:
+        return mask
+    x = mask.unsqueeze(1)
+    x = F.pad(x, (radius, radius, radius, radius), mode="reflect")
+    x = F.max_pool2d(x, kernel_size=2 * radius + 1, stride=1)
+    return x.squeeze(1)
+
+
+def _min_pool_mask(mask, radius):
+    radius = int(radius)
+    if radius <= 0:
+        return mask
+    return -_max_pool_mask(-mask, radius)
+
+
+def _white_tophat(mask, radius):
+    eroded = _min_pool_mask(mask, radius)
+    opened = _max_pool_mask(eroded, radius)
+    return (mask - opened).clamp(0.0, 1.0)
+
+
 def _skin_likeness_mask(image):
     img = image.float().clamp(0.0, 1.0)
     r = img[..., 0]
@@ -442,7 +465,7 @@ class Krea2WashRebalanceSkinSafe(Krea2WashRebalance):
                 "multiline": False,
             }),
             "主体前缀": ("STRING", {
-                "default": "(Subject:1.45) (same composition:1.2) (similar pose and body proportions:1.15) (clean even natural skin tone:1.35) ",
+                "default": "(Subject:1.45) (same composition:1.2) (similar pose and body proportions:1.15) (clean even natural skin tone:1.35) (no watermark:1.5) (no text:1.4) (no emoji:1.4) (no stickers:1.4) (no overlay symbols:1.4) ",
                 "multiline": True,
                 "dynamicPrompts": True,
             }),
@@ -475,7 +498,7 @@ class Krea2WashRebalanceSkinSafe(Krea2WashRebalance):
             kwargs,
             "主体前缀",
             "subject_prefix",
-            "(Subject:1.45) (same composition:1.2) (similar pose and body proportions:1.15) (clean even natural skin tone:1.35) ",
+            "(Subject:1.45) (same composition:1.2) (similar pose and body proportions:1.15) (clean even natural skin tone:1.35) (no watermark:1.5) (no text:1.4) (no emoji:1.4) (no stickers:1.4) (no overlay symbols:1.4) ",
         )
         use_vision_tokens = _kw(kwargs, "使用视觉Token", "use_vision_tokens", True)
         use_internal_reference_latents = _kw(
@@ -510,14 +533,20 @@ class Krea2WashReferenceSize:
         return {"required": {
             "参考图": ("IMAGE",),
             "缩放算法": (cls.upscale_methods, {"default": "lanczos"}),
-            "尺寸对齐倍数": ("INT", {"default": 8, "min": 8, "max": 128, "step": 8}),
+            "尺寸对齐倍数": ("INT", {
+                "default": 1,
+                "min": 1,
+                "max": 128,
+                "step": 1,
+                "tooltip": "1 表示完全不对齐、不改尺寸；需要配合 VAE/深度图/ControlNet 时可设为 8 或 16。",
+            }),
             "对齐方式": (cls.align_modes, {"default": "nearest"}),
             "最大百万像素": ("FLOAT", {
                 "default": 0.0,
                 "min": 0.0,
                 "max": 64.0,
                 "step": 0.1,
-                "tooltip": "0 表示不限制原图尺寸，只做倍数对齐。",
+                "tooltip": "0 表示不限制原图尺寸；只有尺寸对齐倍数大于 1 或设置上限时才会缩放。",
             }),
         }}
 
@@ -566,6 +595,74 @@ class Krea2WashReferenceSize:
         samples = image.movedim(-1, 1)
         resized = comfy.utils.common_upscale(samples, width, height, upscale_method, "disabled").movedim(1, -1)
         return (resized, width, height)
+
+
+class Krea2WashWatermarkCleaner:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {
+            "图像": ("IMAGE",),
+            "清理强度": ("FLOAT", {"default": 0.90, "min": 0.0, "max": 1.0, "step": 0.05}),
+            "白色阈值": ("FLOAT", {"default": 0.72, "min": 0.35, "max": 1.0, "step": 0.01}),
+            "局部对比阈值": ("FLOAT", {"default": 0.055, "min": 0.005, "max": 0.30, "step": 0.005}),
+            "低饱和上限": ("FLOAT", {"default": 0.30, "min": 0.02, "max": 1.0, "step": 0.02}),
+            "笔画半径": ("INT", {"default": 7, "min": 1, "max": 31, "step": 2}),
+            "遮罩扩张": ("INT", {"default": 5, "min": 0, "max": 24, "step": 1}),
+            "修补半径": ("INT", {"default": 17, "min": 3, "max": 63, "step": 2}),
+        }}
+
+    RETURN_TYPES = ("IMAGE", "IMAGE", "MASK")
+    RETURN_NAMES = ("清理图像", "水印预览", "水印遮罩")
+    FUNCTION = "main"
+    CATEGORY = "conditioning/Krea2洗图"
+
+    def main(self, **kwargs):
+        image = _kw(kwargs, "图像", "image")
+        clean_strength = _kw(kwargs, "清理强度", "clean_strength", 0.90)
+        white_threshold = _kw(kwargs, "白色阈值", "white_threshold", 0.72)
+        contrast_threshold = _kw(kwargs, "局部对比阈值", "contrast_threshold", 0.055)
+        saturation_limit = _kw(kwargs, "低饱和上限", "saturation_limit", 0.30)
+        stroke_radius = _kw(kwargs, "笔画半径", "stroke_radius", 7)
+        mask_expand = _kw(kwargs, "遮罩扩张", "mask_expand", 5)
+        patch_radius = _kw(kwargs, "修补半径", "patch_radius", 17)
+
+        if not _COMFY_AVAILABLE:
+            raise RuntimeError("Krea 2 Wash Control requires ComfyUI.")
+
+        img = image.float().clamp(0.0, 1.0)
+        r = img[..., 0]
+        g = img[..., 1]
+        b = img[..., 2]
+        y = 0.299 * r + 0.587 * g + 0.114 * b
+        maxc = torch.max(torch.max(r, g), b)
+        minc = torch.min(torch.min(r, g), b)
+        saturation = maxc - minc
+
+        top_hat = _white_tophat(y, int(stroke_radius))
+        local = _gaussian_blur_nhwc(img, max(int(patch_radius), 3))
+        local_y = 0.299 * local[..., 0] + 0.587 * local[..., 1] + 0.114 * local[..., 2]
+        local_contrast = (y - local_y).clamp(0.0, 1.0)
+
+        bright = torch.sigmoid((y - float(white_threshold)) / 0.035)
+        pale = torch.sigmoid((float(saturation_limit) - saturation) / 0.04)
+        stroke = torch.sigmoid((top_hat - float(contrast_threshold)) / 0.018)
+        contrast = torch.sigmoid((local_contrast - float(contrast_threshold)) / 0.018)
+        mask = (bright * pale * torch.maximum(stroke, contrast)).clamp(0.0, 1.0)
+
+        if mask_expand > 0:
+            mask = _max_pool_mask(mask, int(mask_expand))
+            mask = _gaussian_blur_nhwc(mask.unsqueeze(-1), max(1, int(mask_expand))).squeeze(-1)
+
+        mask = (mask * float(clean_strength)).clamp(0.0, 1.0)
+        repaired = local
+        cleaned = img * (1.0 - mask.unsqueeze(-1)) + repaired * mask.unsqueeze(-1)
+
+        preview = torch.stack([
+            mask.clamp(0.0, 1.0),
+            mask.clamp(0.0, 1.0),
+            torch.zeros_like(mask),
+        ], dim=-1)
+        return (cleaned.clamp(0.0, 1.0).to(image.dtype), preview.to(image.dtype), mask)
 
 
 class Krea2WashLatentSkinCleaner:
@@ -704,6 +801,7 @@ class Krea2WashSkinSpotCleaner:
 NODE_CLASS_MAPPINGS = {
     "Krea2WashRebalanceSkinSafe": Krea2WashRebalanceSkinSafe,
     "Krea2WashReferenceSize": Krea2WashReferenceSize,
+    "Krea2WashWatermarkCleaner": Krea2WashWatermarkCleaner,
     "Krea2WashLatentSkinCleaner": Krea2WashLatentSkinCleaner,
     "Krea2WashSkinSpotCleaner": Krea2WashSkinSpotCleaner,
 }
@@ -711,6 +809,7 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     "Krea2WashRebalanceSkinSafe": "Krea2洗图重平衡（肤质安全）",
     "Krea2WashReferenceSize": "Krea2洗图参考尺寸",
+    "Krea2WashWatermarkCleaner": "Krea2洗图白色符号水印清理",
     "Krea2WashLatentSkinCleaner": "Krea2洗图Latent肤质清理",
     "Krea2WashSkinSpotCleaner": "Krea2洗图皮肤暗点清理",
 }
