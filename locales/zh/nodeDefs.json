@@ -1,0 +1,187 @@
+{
+  "Krea2WashRebalanceSkinSafe": {
+    "display_name": "Krea2洗图重平衡（肤质安全）",
+    "description": "给 Krea2 洗图提供柔和的参考图条件，尽量保构图、姿势和比例，同时降低 reference latent 对皮肤噪点的继承。",
+    "inputs": {
+      "text": {
+        "name": "正向提示词",
+        "tooltip": "描述目标画面。节点会自动在前面加 subject_prefix，用于强调主体、构图和干净肤质。"
+      },
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "VAE"
+      },
+      "image": {
+        "name": "参考图",
+        "tooltip": "用于控制构图、姿势、身形比例和画面关系的原图。"
+      },
+      "reference_strength": {
+        "name": "参考强度",
+        "tooltip": "参考图条件强度。越高越像原图，但也更容易继承脏点和旧皮肤纹理。"
+      },
+      "text_end_percent": {
+        "name": "文字结束进度",
+        "tooltip": "前段采样主要听文字提示词的截止位置。"
+      },
+      "image_start_percent": {
+        "name": "图像开始进度",
+        "tooltip": "参考图条件从采样的哪个进度开始介入。"
+      },
+      "rebalance_multiplier": {
+        "name": "重平衡倍率",
+        "tooltip": "增强 Krea2 条件中关键层的权重。过高可能带来脏纹理或构图过硬。"
+      },
+      "guidance_strength": {
+        "name": "差异引导强度",
+        "tooltip": "控制条件向量的差异引导。洗图建议保持较低，避免肤质被拉脏。"
+      },
+      "main_layer_weights": {
+        "name": "主层权重",
+        "tooltip": "按逗号分隔的 12 层权重。一般不需要改，除非继续微调构图控制。"
+      },
+      "subject_prefix": {
+        "name": "主体前缀",
+        "tooltip": "自动拼到提示词前面，用来强调同主体、相似姿势、身体比例和干净肤色。"
+      },
+      "use_vision_tokens": {
+        "name": "使用视觉 Token",
+        "tooltip": "开启后参考图会作为视觉 token 进入 Krea2 条件，更利于保构图。"
+      },
+      "use_internal_reference_latents": {
+        "name": "使用内部参考 Latent",
+        "tooltip": "开启会额外注入 reference_latents，保图更强，但更容易继承黑点、斑点和色块。当前洗图建议关闭。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "条件"
+      }
+    }
+  },
+  "Krea2WashReferenceSize": {
+    "display_name": "Krea2洗图参考尺寸",
+    "description": "按参考图尺寸输出宽高，让洗图保持原图比例；必要时只做 8 倍数等对齐。",
+    "inputs": {
+      "image": {
+        "name": "参考图"
+      },
+      "upscale_method": {
+        "name": "缩放算法",
+        "tooltip": "当尺寸需要调整时使用的缩放算法。"
+      },
+      "align_multiple": {
+        "name": "尺寸对齐倍数",
+        "tooltip": "将宽高对齐到指定倍数。Krea2/latent 通常建议 8。"
+      },
+      "align_mode": {
+        "name": "对齐方式",
+        "tooltip": "nearest 为就近对齐，down 为向下取整，up 为向上取整。"
+      },
+      "max_megapixels": {
+        "name": "最大百万像素",
+        "tooltip": "0 表示不限制原图尺寸，只做倍数对齐；大图爆显存时再设置上限。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "对齐图像"
+      },
+      "1": {
+        "name": "宽度"
+      },
+      "2": {
+        "name": "高度"
+      }
+    }
+  },
+  "Krea2WashLatentSkinCleaner": {
+    "display_name": "Krea2洗图Latent肤质清理",
+    "description": "在 VAEEncode 前轻度清理参考图肤色区域，减少低 denoise 从原图继承的暗点和粗糙纹理。",
+    "inputs": {
+      "image": {
+        "name": "图像"
+      },
+      "skin_smooth": {
+        "name": "肤质平滑",
+        "tooltip": "肤色区域混合清理强度。越高越干净，也越容易糊。"
+      },
+      "skin_mask_expand": {
+        "name": "肤色遮罩扩张",
+        "tooltip": "扩大肤色遮罩覆盖范围，用于包含脸、手臂、腿部等区域。"
+      },
+      "detail_keep": {
+        "name": "细节保留",
+        "tooltip": "把局部细节重新加回的比例。越高越锐，但也可能保留斑点。"
+      },
+      "blur_radius": {
+        "name": "主模糊半径",
+        "tooltip": "用于生成干净肤质底色的模糊半径。"
+      },
+      "lowpass_radius": {
+        "name": "低通半径",
+        "tooltip": "用于计算可保留细节的低通半径。"
+      },
+      "global_denoise": {
+        "name": "全局轻降噪",
+        "tooltip": "对清理后的图像做很轻的全局柔化，过高会损失清晰度。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "清理图像"
+      },
+      "1": {
+        "name": "遮罩预览"
+      },
+      "2": {
+        "name": "肤色遮罩"
+      }
+    }
+  },
+  "Krea2WashSkinSpotCleaner": {
+    "display_name": "Krea2洗图皮肤暗点清理",
+    "description": "检测肤色区域里的小暗点，并用局部均值轻修，主要用于压制黑点、斑点和点状扩散。",
+    "inputs": {
+      "image": {
+        "name": "图像"
+      },
+      "clean_strength": {
+        "name": "清理强度",
+        "tooltip": "暗点修复的混合强度。越高越干净，也越容易留下局部糊感。"
+      },
+      "spot_threshold": {
+        "name": "暗点阈值",
+        "tooltip": "越低越容易把小暗点识别出来；过低可能误伤衣服褶皱和阴影。"
+      },
+      "spot_expand": {
+        "name": "暗点扩张",
+        "tooltip": "扩大暗点遮罩，处理带扩散边缘的小斑点。"
+      },
+      "patch_radius": {
+        "name": "修补半径",
+        "tooltip": "用于生成局部修补颜色的半径。较大更平，较小更保细节。"
+      },
+      "skin_mask_expand": {
+        "name": "肤色遮罩扩张",
+        "tooltip": "扩大肤色识别范围，减少漏掉脸、手臂或腿部暗点。"
+      },
+      "global_skin_smooth": {
+        "name": "全局肤色平滑",
+        "tooltip": "只在肤色区域做轻微整体平滑，用来压残留脏感。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "清理图像"
+      },
+      "1": {
+        "name": "暗点预览"
+      },
+      "2": {
+        "name": "暗点遮罩"
+      }
+    }
+  }
+}
