@@ -1,77 +1,84 @@
 # ComfyUI-Krea2WashControl
 
-这是一个给 Krea2 / Krea2Edit 洗图工作流用的 ComfyUI 本地辅助插件。目标是把文生图模型改造成更好用的“洗图流”：尽量保留原图比例、构图、人物姿势和身体轮廓，同时减少低 denoise 洗图时常见的皮肤黑点、斑点、色块和脏纹理。
+Local ComfyUI helper nodes for Krea2 / Krea2Edit wash-style img2img workflows.
 
-这个插件是独立的本地插件，不修改 `ComfyUI-ConditioningKrea2Rebalance`。如果你同时安装了上游 Krea2 Rebalance 插件，正常更新上游插件不会覆盖这里的节点。
+The goal is to make Krea2 easier to use as an image washing workflow: preserve the source aspect ratio, composition, pose, body proportions, and character silhouette while reducing low-denoise artifacts such as dirty skin texture, dark spots, color blotches, symbol/watermark copying, and sticker-like visual noise.
 
-## 适合解决什么问题
+This plugin is independent from `ComfyUI-ConditioningKrea2Rebalance`. Updating the upstream Krea2 Rebalance extension will not overwrite these nodes.
 
-- 想让洗图输出保持原图尺寸和比例，而不是全部固定成同一种尺寸。
-- 想在 Krea2 洗图里更稳地控制角色姿势、身高比例、胖瘦轮廓和构图关系。
-- 低 denoise 时构图很像原图，但皮肤容易继承黑点、暗斑、点状扩散或横线脏纹理。
-- 参考图里有黑白或彩色表情、贴纸、字幕、水印等高对比小结构，Krea2 容易把它们当成要保留的画面结构并扩散到新图里。
-- 高 denoise 时肤质更干净，但人物姿势和构图容易跑掉，需要更柔和的参考图控制。
+## What It Helps With
 
-## 节点
+- Keep the output size and aspect ratio close to the input image instead of forcing every image into one fixed resolution.
+- Improve pose, body proportion, silhouette, and composition control in Krea2 wash workflows.
+- Reduce skin dark spots, speckles, horizontal dirty lines, and blotchy texture at low denoise values.
+- Pre-clean black, white, or custom-colored symbols, stickers, captions, emoji, and watermarks before Krea2 reads them as visual structure.
+- Keep a softer reference-image control path when higher denoise improves skin but starts drifting pose or framing.
 
-### Krea2洗图参考尺寸
+## Nodes
 
-让输出尺寸跟随参考图比例。默认 `尺寸对齐倍数=1`，也就是完全不改原图尺寸；需要配合 VAE、深度图或 ControlNet 时，可以手动改成 `8` 或 `16` 做倍数对齐。
+### Krea2 Reference Size
 
-### Krea2洗图重平衡（肤质安全）
+Keeps the workflow size based on the reference image. The default alignment multiple is `1`, meaning no resize or dimension alignment is applied. Set it to `8` or `16` only when you need VAE, depth, ControlNet, or other latent-friendly dimensions.
 
-给 Krea2 提供柔和的参考图条件，尽量保构图、姿势和身体比例，同时降低 reference latent 对皮肤噪点的继承。适合放在正向 conditioning 链路里。
+### Krea2 Skin-Safe Rebalance
 
-### Krea2洗图Latent肤质清理
+Builds a softer Krea2 conditioning path that helps preserve composition, pose, and body proportions while reducing reference-latent inheritance of skin noise. Use it in the positive conditioning chain.
 
-在 `VAEEncode` 前轻度清理参考图肤色区域，减少低 denoise 继承原图暗点和粗糙纹理。
+### Krea2 Colored Symbol / Watermark Cleaner
 
-### Krea2洗图彩色符号水印清理
+Detects high-contrast black, white, or selected-color strokes such as text, emoji, stickers, captions, watermarks, and colorful icons, then lightly repairs them with local image colors.
 
-检测参考图里的黑白或指定颜色高对比笔画，例如颜文字、贴纸、字幕、水印、彩色图标，并用局部颜色轻修。默认 `目标颜色模式=黑白`，也可以输入 `#RRGGBB` 或中文色名清理特定颜色。建议放在 `Krea2洗图重平衡（肤质安全）` 和 `VAEEncode` 之前，避免 Krea2 视觉 Token 把这些小结构当成必须复制的内容。
+Recommended placement: before both `Krea2 Skin-Safe Rebalance` and `VAEEncode`, so Krea2 visual tokens do not treat these small marks as content that must be copied.
 
-### Krea2洗图皮肤暗点清理
+### Krea2 Latent Skin Cleaner
 
-检测肤色区域里的小暗点，并用局部均值轻修。主要用于压制黑点、斑点、点状扩散和轻微横线感。
+Lightly cleans skin-like regions before `VAEEncode`, reducing low-denoise inheritance of rough skin texture and small dark artifacts.
 
-## 中文参数
+### Krea2 Skin Spot Cleaner
 
-节点参数名已经直接中文化，常调参数包括：
+Detects small dark spots in skin-like regions and repairs them with local color averaging. Useful for dark spots, speckles, dot-like spread, and mild dirty line artifacts.
 
-- `参考强度`：越高越保原图姿势和比例，也越容易继承原图脏点。
-- `文字结束进度` / `图像开始进度`：控制文字和参考图条件在采样过程中的介入时机。
-- `尺寸对齐倍数`：`1` 表示不改尺寸；`8/16` 才会把宽高对齐到倍数。
-- `目标颜色模式`：默认 `黑白`，可选只清白色、只清黑色、自定义颜色、黑白加自定义。
-- `自定义颜色`：支持 `#ffffff,#000000`、`#f07ac8`，也支持 `黑,白,红,粉,紫` 或 `black,pink` 这类色名。
-- `白色阈值`：越低越容易识别浅色水印和白色符号；黑色模式会自动用相反阈值识别暗色笔画。
-- `局部对比阈值`：越低越容易抓到细笔画，过低可能把衣物亮边也识别进去。
-- `肤质平滑`：肤色区域清理强度，越高越干净，也越容易变糊。
-- `暗点阈值`：越低越容易识别小黑点，过低可能误伤阴影或衣物褶皱。
-- `全局肤色平滑`：只在肤色区域做轻微整体平滑，用来压残留脏感。
+## Common Parameters
 
-## 推荐链路
+- `reference_strength`: Higher values preserve the source pose and proportions more strongly, but can also carry over unwanted artifacts.
+- `text_end_percent` / `image_start_percent`: Controls when text and image-reference conditioning are active during sampling.
+- `align_multiple`: `1` means keep the original size; `8` or `16` aligns width and height to that multiple.
+- `color_mode`: Choose `black_white`, white only, black only, custom colors, or black/white plus custom colors.
+- `custom_colors`: Supports `#ffffff,#000000`, `#f07ac8`, and names such as `black`, `white`, `pink`, `orange`.
+- `color_tolerance`: Higher values match a wider range around custom colors, but can also catch similar-looking details.
+- `white_threshold`: Lower values catch more light symbols; black mode uses the opposite threshold for dark strokes.
+- `contrast_threshold`: Lower values catch thinner strokes, but can also affect lace, clothing edges, or fine texture.
+- `skin_smooth`: Higher values clean skin more, but can look soft or blurred.
+- `spot_threshold`: Lower values catch more tiny dark spots, but can also affect shadows and clothing folds.
+- `global_skin_smooth`: A light skin-only smoothing pass to reduce remaining dirty texture.
 
-基础链路：
+## Recommended Chain
 
 ```text
-参考图 -> Krea2洗图参考尺寸 -> Krea2洗图彩色符号水印清理 -> Krea2洗图Latent肤质清理 -> Krea2洗图皮肤暗点清理 -> VAEEncode -> KSampler
+Reference image
+-> Krea2 Reference Size
+-> Krea2 Colored Symbol / Watermark Cleaner
+-> Krea2 Latent Skin Cleaner
+-> Krea2 Skin Spot Cleaner
+-> VAEEncode
+-> KSampler
 ```
 
-同时把 `Krea2洗图彩色符号水印清理` 输出的清理图像接到 `Krea2洗图重平衡（肤质安全）`，用于帮助 Krea2 保持构图、姿势和人物比例。不要把带水印、贴纸或明显符号的原图直接接进 Krea2 视觉参考，否则模型容易复制甚至扩散这些小结构。
+Also connect the cleaned image from `Krea2 Colored Symbol / Watermark Cleaner` to `Krea2 Skin-Safe Rebalance`. Do not feed a source image with obvious watermarks, captions, stickers, or symbols directly into Krea2 visual reference conditioning, because the model may copy or amplify them.
 
-## 安装
+## Installation
 
-在 ComfyUI 的 `custom_nodes` 目录执行：
+Clone this repository into your ComfyUI `custom_nodes` directory:
 
 ```bash
 git clone https://github.com/Z-yaofang/ComfyUI-Krea2WashControl.git
 ```
 
-然后重启 ComfyUI。
+Restart ComfyUI after installation or updates.
 
-## 注意事项
+## Notes
 
-- 这是 Krea2 洗图辅助节点，不包含 Krea2 模型本体。
-- 修改插件后需要重启 ComfyUI。
-- 如果浏览器还显示旧参数名，可以按 `Ctrl+F5` 强制刷新。
-- 皮肤清理节点是为了减少参考图进入 latent 前的脏点继承，不是通用磨皮或人脸修复工具。
+- This plugin does not include the Krea2 model itself.
+- The current node UI labels are localized for the author's local Chinese ComfyUI setup.
+- If ComfyUI still shows old node parameters after an update, restart ComfyUI and force-refresh the browser with `Ctrl+F5`.
+- The cleaners are preprocessing helpers for Krea2 wash workflows. They are not full face restoration, inpainting, or general-purpose retouching tools.
